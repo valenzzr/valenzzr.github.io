@@ -19,12 +19,12 @@
   <meta name="author" content="Pivy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Farcaster.xyz数据收集文档 Author : Zhang Zhirui Date : 2025 - 09 - 16 Version: 2.0 Description: How to deploy snapchain to the server to collect data from Farcaster. Collected some problems and solutions en">
+    <meta name="description" content="Farcaster.xyz数据收集文档 Author : Pivy Date : 2025 - 09 - 16 Version: 2.0 Description: How to deploy snapchain to the server to collect data from Farcaster. Collected some problems and solutions encountere">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Farcaster.xyz数据收集文档">
 <meta property="og:url" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Pivy&#39;s blog">
-<meta property="og:description" content="Farcaster.xyz数据收集文档 Author : Zhang Zhirui Date : 2025 - 09 - 16 Version: 2.0 Description: How to deploy snapchain to the server to collect data from Farcaster. Collected some problems and solutions en">
+<meta property="og:description" content="Farcaster.xyz数据收集文档 Author : Pivy Date : 2025 - 09 - 16 Version: 2.0 Description: How to deploy snapchain to the server to collect data from Farcaster. Collected some problems and solutions encountere">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/3yml.png">
 <meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/1.png">
@@ -33,10 +33,8 @@
 <meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/3.png">
 <meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/4.png">
 <meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/docker_stats.png">
-<meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/docker_inspect.png">
-<meta property="og:image" content="https://valenzzr.github.io/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/live_sync.png">
 <meta property="article:published_time" content="2025-10-24T17:10:06.000Z">
-<meta property="article:modified_time" content="2025-10-24T17:29:39.318Z">
+<meta property="article:modified_time" content="2025-10-25T07:39:26.405Z">
 <meta property="article:author" content="Pivy">
 <meta property="article:tag" content="数据收集">
 <meta name="twitter:card" content="summary_large_image">
@@ -233,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          2.9k 字
         
       </span>
     
@@ -287,7 +285,7 @@
               <div class="markdown-body">
                 
                 <h1 id="Farcaster-xyz数据收集文档"><a href="#Farcaster-xyz数据收集文档" class="headerlink" title="Farcaster.xyz数据收集文档"></a>Farcaster.xyz数据收集文档</h1><blockquote>
-<p><em>Author : Zhang Zhirui</em></p>
+<p><em>Author : Pivy</em></p>
 <p><em>Date : 2025 - 09 - 16</em></p>
 <p><em>Version: 2.0</em></p>
 <p><em>Description: How to deploy snapchain to the server to collect data from Farcaster. Collected some problems and solutions encountered during the deployment process</em> </p>
@@ -368,8 +366,8 @@
 <p>只需要运行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -ld ~/snapchain_deploy/grafana/data<br></code></pre></td></tr></table></figure>
 
-<p>如果出现（以我的服务器为例）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">drwxr-xr-x 2 zhirui zhirui 2 Sep 11 14:26<br></code></pre></td></tr></table></figure>
+<p>如果出现</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">drwxr-xr-x 2 username username 2 Sep 11 14:26<br></code></pre></td></tr></table></figure>
 
 <p>说明grafana&#x2F;data目录存在，但 Grafana 容器里的默认用户没有写权限。</p>
 <p>我们<strong>修改权限</strong></p>
@@ -408,24 +406,11 @@
 <p>2.然后解压 &#x2F; 加载 snapshot，把数据写入 <code>.rocks/</code>（RocksDB 正式数据库）</p>
 <p>3.最后从 snapshot 的高度继续同步最新的数据</p>
 <hr>
-<h2 id="二、关于Grafana："><a href="#二、关于Grafana：" class="headerlink" title="二、关于Grafana："></a>二、关于Grafana：</h2><h3 id="如何在本机使用Grafana-GUI"><a href="#如何在本机使用Grafana-GUI" class="headerlink" title="如何在本机使用Grafana GUI"></a>如何在本机使用Grafana GUI</h3><h4 id="1-连接NUS-VPN"><a href="#1-连接NUS-VPN" class="headerlink" title="1.连接NUS VPN"></a>1.连接NUS VPN</h4><blockquote>
-<p>若不是学校服务器则无需连接VPN</p>
-</blockquote>
-<h4 id="2-使用SSH隧道转发3000端口"><a href="#2-使用SSH隧道转发3000端口" class="headerlink" title="2.使用SSH隧道转发3000端口"></a>2.使用SSH隧道转发3000端口</h4><p>windows系统在cmd或者PowerShell里运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -L 3000:localhost:3000 zhirui@172.28.122.124<br></code></pre></td></tr></table></figure>
-
-<p>使用新服务器：</p>
-<blockquote>
-<p>新服务器的SSH：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -p 720 zhirui@118.189.188.142<br></code></pre></td></tr></table></figure></blockquote>
-<p>windows转发3000端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -p 720 -L 3000:localhost:3000 zhirui@118.189.188.142<br></code></pre></td></tr></table></figure>
-
-<h4 id="3-保持本机的SSH会话不要关"><a href="#3-保持本机的SSH会话不要关" class="headerlink" title="3.保持本机的SSH会话不要关"></a>3.保持本机的SSH会话不要关</h4><p>必须保持使用期间打开，因为隧道依赖这条SSH连接。</p>
-<h4 id="4-打开Grafana-GUI"><a href="#4-打开Grafana-GUI" class="headerlink" title="4.打开Grafana GUI"></a>4.打开Grafana GUI</h4><p>在本地浏览器访问</p>
+<h2 id="二、关于Grafana："><a href="#二、关于Grafana：" class="headerlink" title="二、关于Grafana："></a>二、关于Grafana：</h2><h3 id="如何在本机使用Grafana-GUI"><a href="#如何在本机使用Grafana-GUI" class="headerlink" title="如何在本机使用Grafana GUI"></a>如何在本机使用Grafana GUI</h3><h4 id="1-使用SSH隧道转发3000端口"><a href="#1-使用SSH隧道转发3000端口" class="headerlink" title="1.使用SSH隧道转发3000端口"></a>1.使用SSH隧道转发3000端口</h4><h4 id="2-保持本机的SSH会话不要关"><a href="#2-保持本机的SSH会话不要关" class="headerlink" title="2.保持本机的SSH会话不要关"></a>2.保持本机的SSH会话不要关</h4><p>必须保持使用期间打开，因为隧道依赖这条SSH连接。</p>
+<h4 id="3-打开Grafana-GUI"><a href="#3-打开Grafana-GUI" class="headerlink" title="3.打开Grafana GUI"></a>3.打开Grafana GUI</h4><p>在本地浏览器访问</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">http://localhost:3000<br></code></pre></td></tr></table></figure>
 
-<p>至此，相当于在本机访问到了服务器172.28.122.124上的Grafana</p>
+<p>至此，相当于在本机访问到了服务器上的Grafana</p>
 <hr>
 <h2 id="三、关于如何让snapchain在SSH会话关闭-服务器断开连接-时继续保持数据同步的一些操作（针对rootless-docker）"><a href="#三、关于如何让snapchain在SSH会话关闭-服务器断开连接-时继续保持数据同步的一些操作（针对rootless-docker）" class="headerlink" title="三、关于如何让snapchain在SSH会话关闭(服务器断开连接)时继续保持数据同步的一些操作（针对rootless docker）"></a>三、关于如何让snapchain在SSH会话关闭(服务器断开连接)时继续保持数据同步的一些操作（针对rootless docker）</h2><p>发现一个问题，当我们SSH会话断开时，docker也就停止运行了，导致数据同步一直在不断的重启，也就是说每次关闭SSH会话时，snapchain容器就停止运行了，数据同步就中止了，当下一次SSH会话打开时，snapchain容器重新运行，导致数据又从头开始同步。</p>
 <p>这是由于<strong>rootless docker</strong>导致的，解决办法：</p>
@@ -486,8 +471,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker inspect snapchain_deploy-snapchain-1 | grep -i NanoCpus<br></code></pre></td></tr></table></figure>
 
 <p>出现结果：</p>
-<img src="/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/docker_inspect.png" srcset="/img/loading.gif" lazyload class="" title="docker_inspect">
-
 <p>单位是1e9（nano CPUs），因此4000000000 &#x2F; 1e9 &#x3D; 4</p>
 <p>表示 4 核 CPU 限制</p>
 <p>其余容器均可以此命令查询（grafana和statsd均为500000000，表示0.5核）</p>
@@ -504,11 +487,9 @@
 </li>
 <li><p>当第一部分结束后，我们运行命令<code>curl -s http://localhost:3381/v1/info | jq .</code>查询 Snapchain 节点是否在运行，并显示它的当前状态（网络、同步进度、存储信息），方便我们判断节点是否已经同步完成。</p>
 </li>
-<li><p>看到<code>blockDelay</code> （如下图）不断缩小的过程意味着本地高度逐渐追上主网最新高度。</p>
+<li><p>看到<code>blockDelay</code>不断缩小的过程意味着本地高度逐渐追上主网最新高度。</p>
 </li>
 </ul>
-<img src="/2025/10/25/snapchain%E9%83%A8%E7%BD%B2/live_sync.png" srcset="/img/loading.gif" lazyload class="" title="live_sync">
-
 <p>根据官方文档<a target="_blank" rel="noopener" href="https://snapchain.farcaster.xyz/getting-started">snapchain&#x2F;get_started</a>，当每一个shard中的blockDelay变为个位数时，可以认为，此时snapchain已经追上网络，同步完成。</p>
 
                 
